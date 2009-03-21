@@ -10,8 +10,7 @@ Rails::Initializer.run do |config|
   config.gem 'mislav-will_paginate', :lib => 'will_paginate', :source => 'http://gems.github.com'
   config.gem 'hpricot', :source => 'http://code.whytheluckystiff.net'
   config.gem 'RedCloth'
-  config.gem 'thoughtbot-quietbacktrace', :lib => 'quietbacktrace', :source => 'http://gems.github.com'
-  config.gem 'thoughtbot-shoulda', :lib => 'shoulda', :source => 'http://gems.github.com'
+  config.gem 'jnunemaker-twitter', :lib => 'twitter', :source => 'http://gems.github.com'
   # Settings in config/environments/* take precedence over those specified here.
   # Application configuration should go into files in config/initializers
   # -- all .rb files in that directory are automatically loaded.
