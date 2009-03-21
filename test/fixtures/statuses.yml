@@ -1,9 +1,10 @@
 # Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
 
 quentin_first:
-  status: Working on a Twitter tool
+  message: Working on a Twitter tool
   user: quentin
 
 quentin_second:
-  status: Creating the rails app for the twitter tool.
+  message: Creating the rails app for the twitter tool.
   user: quentin
+  done_at: <%= 10.minutes.ago.to_s :db %>

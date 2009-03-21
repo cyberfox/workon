@@ -3,7 +3,6 @@ class CreateStatuses < ActiveRecord::Migration
     create_table :statuses do |t|
       t.string   :message
       t.integer  :user_id
-      t.boolean  :done
       t.datetime :done_at
 
       t.timestamps
