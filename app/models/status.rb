@@ -10,11 +10,14 @@ class Status < ActiveRecord::Base
 
   def self.import
     twitter = Twitter::Base.new(TWITTER_USER, TWITTER_PASSWORD)
-    msgs = twitter.direct_messages
-    msgs.each do |message|
-      user = User.find_by_twitter_id(message.sender_id)
-      Status.create(:user => user, :message => message.text)
-      twitter.destroy_direct_message(message.id)
-    end
+    begin
+      msgs = twitter.direct_messages
+      could_be_more = (msgs.length == 20)
+      msgs.each do |message|
+        user = User.find_by_twitter_id(message.sender_id)
+        Status.create(:user => user, :message => message.text)
+        twitter.destroy_direct_message(message.id)
+      end
+    end while could_be_more
   end
 end
