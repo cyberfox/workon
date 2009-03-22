@@ -11,6 +11,10 @@ Rails::Initializer.run do |config|
   config.gem 'hpricot', :source => 'http://code.whytheluckystiff.net'
   config.gem 'RedCloth'
   config.gem 'jnunemaker-twitter', :lib => 'twitter', :source => 'http://gems.github.com'
+  config.gem 'httparty'
+  config.gem 'echoe'
+  config.gem 'rubyforge'
+  config.gem 'highline'
   # Settings in config/environments/* take precedence over those specified here.
   # Application configuration should go into files in config/initializers
   # -- all .rb files in that directory are automatically loaded.
