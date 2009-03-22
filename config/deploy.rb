@@ -24,6 +24,10 @@ task :before_migrate do
   run "cp ~/config/database.yml.production #{release_path}/config/database.yml"
 end
 
+task :after_update_code do
+  run "rake gems:build"
+end
+
 namespace :deploy do
   task :restart do
     run "cp ~/config/database.yml.production #{release_path}/config/database.yml"
