@@ -1,3 +1,5 @@
+gem 'rake'
+require 'rake'
 
 class String #:nodoc:
   def uncapitalize #:nodoc:
