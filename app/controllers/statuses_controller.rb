@@ -12,6 +12,16 @@ class StatusesController < ApplicationController
     end
   end
 
+  def user
+    user = User.find_by_login(params[:id])
+    if user
+      @statuses = user.statuses.active
+      render :action => 'index'
+    else
+      redirect_to '/'
+    end
+  end
+
   # GET /statuses/1
   # GET /statuses/1.xml
   def show
