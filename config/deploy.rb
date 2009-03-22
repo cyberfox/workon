@@ -22,7 +22,7 @@ role :db,  "workon.cyberfox.com", :primary => true
 
 task :after_update_code do
   run "cp ~/config/database.yml.production #{release_path}/config/database.yml"
-  run "cd #{release_path}; rake gems:build"
+  run "cd #{release_path}; RAILS_ENV=production rake gems:build"
 end
 
 namespace :deploy do
