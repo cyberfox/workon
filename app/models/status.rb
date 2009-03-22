@@ -14,6 +14,7 @@ class Status < ActiveRecord::Base
     msgs.each do |message|
       user = User.find_by_twitter_id(message.sender_id)
       Status.create(:user => user, :message => message.text)
+      twitter.destroy_direct_message(message.id)
     end
   end
 end
