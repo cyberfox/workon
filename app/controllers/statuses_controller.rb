@@ -20,7 +20,7 @@ class StatusesController < ApplicationController
   def user
     user = User.find_by_login(params[:id])
     if user
-      @statuses = user.statuses.active
+      @statuses = user.statuses
       render :action => 'index'
     else
       redirect_to '/'

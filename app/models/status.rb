@@ -36,7 +36,7 @@ class Status < ActiveRecord::Base
       user = User.find_by_twitter_id(message.sender_id)
       if done_message?(message.text)
         last_status = user.statuses.active.last
-        last.update_attribute :done_at, message.created_at if last
+        last_status.update_attribute :done_at, message.created_at if last_status
       end
     end
   end
