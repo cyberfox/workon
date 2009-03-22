@@ -1,5 +1,5 @@
 class StatusesController < ApplicationController
-  before_filter :login_required, :except => [:user]
+  before_filter :login_required, :except => [:user, :info]
 
   # GET /statuses
   # GET /statuses.xml
@@ -10,6 +10,11 @@ class StatusesController < ApplicationController
       format.html # index.html.erb
       format.xml  { render :xml => @statuses }
     end
+  end
+
+  def info
+    twitter = Twitter::Base.new(TWITTER_USER, TWITTER_PASSWORD)
+    @info = twitter.rate_limit_status
   end
 
   def user
