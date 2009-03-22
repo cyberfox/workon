@@ -20,6 +20,10 @@ role :app, "workon.cyberfox.com"
 role :web, "workon.cyberfox.com"
 role :db,  "workon.cyberfox.com", :primary => true
 
+task :before_migrate do
+  run "cp ~/config/database.yml.production #{release_path}/config/database.yml"
+end
+
 namespace :deploy do
   task :restart do
     run "cp ~/config/database.yml.production #{release_path}/config/database.yml"
