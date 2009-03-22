@@ -1,3 +1,4 @@
+require 'ostruct'
 # Settings specified here will take precedence over those in config/environment.rb
 
 # The test environment is used exclusively to run your application's
@@ -28,3 +29,6 @@ config.action_mailer.delivery_method = :test
 # config.active_record.schema_format = :sql
 
 config.gem 'thoughtbot-shoulda', :lib => 'shoulda', :source => 'http://gems.github.com'
+OpenStruct.class_eval do
+  undef :id, :type
+end

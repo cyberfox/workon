@@ -1,6 +1,13 @@
 require 'test_helper'
 
 class StatusesControllerTest < ActionController::TestCase
+  should "get info" do
+    @twitter_mock.should_receive(:rate_limit_status).once.and_return(OpenStruct.new(:hourly_limit => 100, :remaining_hits => 94, :reset_time => 31.minutes.from_now))
+    get :info
+    assert_response :success
+    assert @response.body.include?('94/100')
+  end
+
   context "A logged in user" do
     setup do
       login_as :quentin

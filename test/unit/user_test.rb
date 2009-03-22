@@ -1,21 +1,14 @@
 require File.dirname(__FILE__) + '/../test_helper'
-require 'flexmock'
 
 class UserTest < ActiveSupport::TestCase
-  include FlexMock::TestCase
-
   # Be sure to include AuthenticatedTestHelper in test/test_helper.rb instead.
   # Then, you can remove it from this and the functional test.
   include AuthenticatedTestHelper
-  fixtures :users
 
   should "follow a user" do
-    ::TWITTER_USER='demo'
-    ::TWITTER_PASSWORD='demo'
     user = create_user(:twitter_id => 1337, :twitter_name => 'aaron')
-    mock = flexmock(Twitter::Base).new_instances
-    mock.should_receive(:create_friendship).once.with(1337).and_return
-    mock.should_receive(:follow).once.with(1337).and_return
+    @twitter_mock.should_receive(:create_friendship).once.with(1337).and_return
+    @twitter_mock.should_receive(:follow).once.with(1337).and_return
     user.follow
   end
 

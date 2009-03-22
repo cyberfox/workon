@@ -1,18 +1,13 @@
 require 'test_helper'
 require 'shoulda'
-gem 'flexmock'
-require 'flexmock'
 require 'ostruct'
 
 class StatusTest < ActiveSupport::TestCase
-  include FlexMock::TestCase
-
   context "Importing" do
     setup do
-      flexmock(Twitter::Base).new_instances.should_receive(:direct_messages).and_return do
-        [OpenStruct.new(:sender_id => 1337, :message => 'Just testing'),
-         OpenStruct.new(:sender_id => 1836, :message => 'Shoot him!')]
-      end
+      @twitter_mock.should_receive(:direct_messages).once.and_return([OpenStruct.new(:sender_id => 1337, :message => 'Just testing', :id => 15),
+         OpenStruct.new(:sender_id => 1836, :message => 'Shoot him!', :id => 17)])
+      @twitter_mock.should_receive(:destroy_direct_message).twice.and_return
     end
 
     should "be successful" do

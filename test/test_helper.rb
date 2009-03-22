@@ -2,12 +2,18 @@ ENV["RAILS_ENV"] = "test"
 require File.expand_path(File.dirname(__FILE__) + "/../config/environment")
 require 'test_help'
 require 'authenticated_test_helper'
+require 'flexmock'
+
+TWITTER_USER='demo' if TWITTER_USER != 'demo'
+TWITTER_PASSWORD='demo' if TWITTER_PASSWORD != 'demo'
 
 class ActionController::TestCase
   include AuthenticatedTestHelper
 end
 
 class ActiveSupport::TestCase
+  include FlexMock::TestCase
+
   # Transactional fixtures accelerate your tests by wrapping each test method
   # in a transaction that's rolled back on completion.  This ensures that the
   # test database remains unchanged so your fixtures don't have to be reloaded
@@ -40,4 +46,9 @@ class ActiveSupport::TestCase
   fixtures :all
 
   # Add more helper methods to be used by all tests here...
+
+  def setup
+    @twitter_mock = flexmock(Twitter::Base).new_instances
+    super
+  end
 end
