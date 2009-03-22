@@ -9,7 +9,7 @@ class Status < ActiveRecord::Base
   end
 
   def self.import
-    twitter = Twitter::Base.new('workon', ENV['TWITTER_PASSWORD'])
+    twitter = Twitter::Base.new(TWITTER_USER, TWITTER_PASSWORD)
     msgs = twitter.direct_messages
     msgs.each do |message|
       user = User.find_by_twitter_id(message.sender_id)
