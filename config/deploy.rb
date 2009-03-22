@@ -20,17 +20,13 @@ role :app, "workon.cyberfox.com"
 role :web, "workon.cyberfox.com"
 role :db,  "workon.cyberfox.com", :primary => true
 
-task :before_migrate do
-  run "cp ~/config/database.yml.production #{release_path}/config/database.yml"
-end
-
 task :after_update_code do
+  run "cp ~/config/database.yml.production #{release_path}/config/database.yml"
   run "cd #{release_path}; rake gems:build"
 end
 
 namespace :deploy do
   task :restart do
-    run "cp ~/config/database.yml.production #{release_path}/config/database.yml"
     run "mongrel_rails cluster::restart -C #{mongrel_config}"
   end
 end
