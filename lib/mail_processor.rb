@@ -5,7 +5,7 @@ class MailProcessor
 
     if(twtype == 'is_following')
       twid = email.header_string('X-Twittersenderid')
-      twname = email.header_string('X-Twitterrecipientscreenname')
+      twname = email.header_string('X-Twittersenderscreenname')
       twfull = email.header_string('X-Twittersendername')
 
       unless User.find_by_twitter_id(twid)
