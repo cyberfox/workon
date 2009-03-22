@@ -25,7 +25,7 @@ task :before_migrate do
 end
 
 task :after_update_code do
-  run "rake gems:build"
+  run "cd #{release_path}; rake gems:build"
 end
 
 namespace :deploy do
