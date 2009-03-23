@@ -52,8 +52,12 @@ class User < ActiveRecord::Base
   # 3 twitter API methods at once; that's a lot, unfortunately.
   def follow
     twitter = Twitter::Base.new(TWITTER_USER, TWITTER_PASSWORD)
-    twitter.create_friendship(twitter_id)
-    twitter.follow(twitter_id)
+    begin
+      twitter.create_friendship(twitter_id)
+      twitter.follow(twitter_id)
+    rescue Twitter::AlreadyFollowing => following
+      logger.warn "Failed to follow #{twitter_id}; we're already following them."
+    end
     twitter.d(twitter_id, "http://workon.cyberfox.com/user/#{access_key} to view recent tasks. 'd workon {task}' to add, 'd workon done' to finish. ~2min response time.")
   end
 
