@@ -1,21 +1,26 @@
 <h1>Listing statuses</h1>
 
-<table>
-  <tr>
-  </tr>
+<table cellspacing="0px" border="1px">
+  <tr><th>Started @</th><th>Task</th><th>Ended at</th></tr>
 
 <% @statuses.each do |status| %>
   <tr>
     <td><%= status.twitter_created_at %></td>
     <td><%= mark_done(status, RedCloth.new(status.message)) %></td>
     <td><% if status.done? %>Done @ <%= status.done_at %><% end %></td>
-    <td><%= link_to 'Show', status %></td>
-    <td><%= link_to 'Edit', edit_status_path(status) %></td>
-    <td><%= link_to 'Destroy', status, :confirm => 'Are you sure?', :method => :delete %></td>
   </tr>
 <% end %>
+<% if @statuses.blank? %><td colspan="3">No recent tasks added.</td><% end %>
 </table>
-
-<br />
-
-<%= link_to 'New status', new_status_path %>
+<br/>
+<ul>
+<li><code>d workon {task}</code> will add a new task in the next minute or two.</li>
+<li><code>d workon done</code> ends a task which will mark it with strikethrough.</li>
+</ul>
+<p>You can stack tasks.  <code>done</code> refers to the most recent task added.</p>
+<p>Start and end times are tracked by the time Twitter created the direct message, so it's not affected by polling times.</p>
+<p><small>(Simple future ideas include <code>d workon done @ {time}</code>,
+responding to <code>done</code> with the amount of time it took,
+'account' control via direct message, and much better formatting of
+this page.  :) )</small></p>
+<div style="position: absolute; right: 10px; bottom: 4px; border: 1px solid black; z-order: 2; background-color: #d8d8d8">by <a href="mailto:mrs@cyberfox.com">Morgan Schweers</a> | A <a href="http://www.cyberfox.com"><span style="color: #7a1f00">Cyber</span><span style="color: #7a1f00">FOX</span></a> project</div>
