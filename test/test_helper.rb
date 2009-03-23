@@ -4,8 +4,8 @@ require 'test_help'
 require 'authenticated_test_helper'
 require 'flexmock'
 
-TWITTER_USER='demo' if TWITTER_USER != 'demo'
-TWITTER_PASSWORD='demo' if TWITTER_PASSWORD != 'demo'
+TWITTER_USER='demo'
+TWITTER_PASSWORD='demo'
 
 class ActionController::TestCase
   include AuthenticatedTestHelper
