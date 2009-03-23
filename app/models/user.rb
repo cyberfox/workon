@@ -22,6 +22,8 @@ class User < ActiveRecord::Base
   validates_uniqueness_of   :email, :if => :email_present?
   validates_format_of       :email,    :with => Authentication.email_regex, :message => Authentication.bad_email_message, :if => :email_present?
 
+  before_create :set_access_key
+
   # HACK HACK HACK -- how to do attr_accessible from here?
   # prevents a user from submitting a crafted form that bypasses activation
   # anything else you want your user to change should be added here.
@@ -61,5 +63,9 @@ class User < ActiveRecord::Base
 
   def email_present?
     !email.nil?
+  end
+
+  def set_access_key
+    write_attribute :access_key, sprintf("%x%x",rand(2147483647),rand(2147483647))
   end
 end
