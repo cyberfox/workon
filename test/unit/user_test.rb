@@ -9,6 +9,7 @@ class UserTest < ActiveSupport::TestCase
     user = create_user(:twitter_id => 1337, :twitter_name => 'aaron')
     @twitter_mock.should_receive(:create_friendship).once.with(1337).and_return
     @twitter_mock.should_receive(:follow).once.with(1337).and_return
+    @twitter_mock.should_receive(:d).once.and_return
     user.follow
   end
 
