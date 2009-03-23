@@ -27,7 +27,7 @@ class UsersController < ApplicationController
     @user = User.visible.find_by_login(who)
     if @user.nil?
       @user = User.find_by_access_key(who)
-      throw ActiveRecord::RecordNotFound.new
+      throw ActiveRecord::RecordNotFound.new unless @user
     end
     @statuses = @user.statuses.recent
   end

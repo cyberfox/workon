@@ -3,7 +3,7 @@ require 'twitter'
 class Status < ActiveRecord::Base
   belongs_to :user
   named_scope :active, :conditions => 'done_at IS NULL'
-  named_scope :recent, :conditions => ['done_at IS NULL OR done_at > ?', 2.days.ago.to_s :db]
+  named_scope :recent, :conditions => ['done_at IS NULL OR done_at > ?', 2.days.ago.to_s(:db)]
 
   def done?
     !!done_at
