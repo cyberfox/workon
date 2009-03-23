@@ -9,8 +9,9 @@ class MailProcessor
       twfull = email.header_string('X-Twittersendername')
 
       unless User.find_by_twitter_id(twid)
+        new_user = User.find_by_twitter_id(twid)
         new_user = User.create(:login => twname, :name => twfull,
-                               :twitter_id => twid, :twitter_name => twname)
+                               :twitter_id => twid, :twitter_name => twname) unless new_user
         new_user.follow
       end
     end
