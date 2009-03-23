@@ -5,7 +5,11 @@ class PidFile
       old_pid = open(pidfilename).read
       unless old_pid.blank?
         puts "Murdering #{old_pid} for #{name} as it's still running."
-        Process.kill(9, old_pid.to_i) unless old_pid.blank?
+        begin 
+          Process.kill(9, old_pid.to_i) unless old_pid.blank?
+        rescue Errno::ESRCH => err
+          puts "...but it's not really there."
+        end
         sleep 1
       end
     end
