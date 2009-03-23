@@ -49,15 +49,12 @@ class User < ActiveRecord::Base
     write_attribute :email, (value ? value.downcase : nil)
   end
 
-  # 3 twitter API methods at once; that's a lot.
+  # 3 twitter API methods at once; that's a lot, unfortunately.
   def follow
     twitter = Twitter::Base.new(TWITTER_USER, TWITTER_PASSWORD)
-    rval = twitter.create_friendship(twitter_id)
-    logger.warn "Twitter:CF - #{rval.inspect}"
-    rval = twitter.follow(twitter_id)
-    logger.warn "Twitter:F - #{rval.inspect}"
-    rval = twitter.d(twitter_id, "http://workon.cyberfox.com/user/#{access_key} to view recent tasks. 'd workon {task}' to add, 'd workon done' to finish.")
-    logger.warn "Twitter:D - #{rval.inspect}"
+    twitter.create_friendship(twitter_id)
+    twitter.follow(twitter_id)
+    twitter.d(twitter_id, "http://workon.cyberfox.com/user/#{access_key} to view recent tasks. 'd workon {task}' to add, 'd workon done' to finish.")
   end
 
   protected
