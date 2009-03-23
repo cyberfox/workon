@@ -15,6 +15,7 @@ class StatusesController < ApplicationController
   def info
     twitter = Twitter::Base.new(TWITTER_USER, TWITTER_PASSWORD)
     @info = twitter.rate_limit_status
+    @users = User.all
   end
 
   def user

@@ -1,1 +1,8 @@
-<%= @info.remaining_hits %>/<%= @info.hourly_limit %> and next resets at <%= @info.reset_time.to_s %>
+<%= @info.remaining_hits %>/<%= @info.hourly_limit %> and next resets at <%= @info.reset_time.to_s %><br/>
+Users: <%= @users.length %><br/>
+<br/>
+<ul>
+<% @users.each do |user| -%>
+<li><%= link_to(user.login, "http://workon.cyberfox.com/user/#{user.access_key} %></li>
+<% end -%>
+</ul>
