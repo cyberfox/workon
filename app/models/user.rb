@@ -5,6 +5,7 @@ class User < ActiveRecord::Base
   include Authentication::ByPassword
   include Authentication::ByCookieToken
 
+  named_scope :visible, :conditions => { :visible => true }
   has_many :statuses
 
   validates_presence_of     :login
