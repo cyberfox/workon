@@ -54,7 +54,7 @@ class User < ActiveRecord::Base
     twitter = Twitter::Base.new(TWITTER_USER, TWITTER_PASSWORD)
     twitter.create_friendship(twitter_id)
     twitter.follow(twitter_id)
-    twitter.d(twitter_id, "http://workon.cyberfox.com/user/#{access_key} to view recent tasks. 'd workon {task}' to add, 'd workon done' to finish.")
+    twitter.d(twitter_id, "http://workon.cyberfox.com/user/#{access_key} to view recent tasks. 'd workon {task}' to add, 'd workon done' to finish. ~2min response time.")
   end
 
   protected
