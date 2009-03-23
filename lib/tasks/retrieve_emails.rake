@@ -15,6 +15,7 @@ namespace :workon do
         MailProcessor.receive(imap.fetch(message_id, "RFC822")[0].attr["RFC822"])
         imap.store(message_id, "+FLAGS", [:Deleted])
       end
+      imap.logout
       imap.disconnect
     end
   end
