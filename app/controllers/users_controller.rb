@@ -3,7 +3,7 @@ class UsersController < ApplicationController
   def new
     @user = User.new
   end
- 
+
   def create
     logout_keeping_session!
     @user = User.new(params[:user])
@@ -20,5 +20,15 @@ class UsersController < ApplicationController
       flash[:error]  = "We couldn't set up that account, sorry.  Please try again, or contact an admin (link is above)."
       render :action => 'new'
     end
+  end
+
+  def show
+    who = params[:id]
+    @user = User.visible.find_by_login(who)
+    if @user.nil?
+      @user = User.find_by_access_key(who)
+      throw ActiveRecord::RecordNotFound.new
+    end
+    @statuses = @user.statuses.recent
   end
 end

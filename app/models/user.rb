@@ -66,6 +66,8 @@ class User < ActiveRecord::Base
   end
 
   def set_access_key
-    write_attribute :access_key, sprintf("%x%x",rand(2147483647),rand(2147483647))
+    code = sprintf("%x%x",rand(2147483647),rand(2147483647))
+    key = Base64.encode64(code.to_a.pack("H*")).gsub('=', '').tr('+/','-_')
+    write_attribute :access_key, key.chomp
   end
 end
