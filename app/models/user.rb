@@ -1,4 +1,5 @@
 require 'digest/sha1'
+require 'xmpp4r-simple'
 
 class User < ActiveRecord::Base
   include Authentication
@@ -69,6 +70,15 @@ class User < ActiveRecord::Base
 
   def email_present?
     !email.nil?
+  end
+
+  def uses_gmail?
+    email_present && email.include? '@gmail.com' && !gmail_password.nil?
+  end
+
+  def set_gmail_status(text)
+    jab = Jabber::Simple.new(email, gmail_password)
+    jab.status(nil, text)
   end
 
   def set_access_key

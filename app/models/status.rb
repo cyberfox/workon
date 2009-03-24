@@ -28,6 +28,7 @@ class Status < ActiveRecord::Base
             user = nil
           end
           Status.create(:user => user, :message => message.text, :twitter_created_at => message.created_at, :twitter_id => message.id)
+          user.set_gmail_status(message.text) if user.uses_gmail?
         end
         begin
           twitter.destroy_direct_message(message.id)
@@ -45,6 +46,8 @@ class Status < ActiveRecord::Base
       if done_message?(message.text)
         last_status = user.statuses.active.last
         last_status.update_attribute :done_at, message.created_at if last_status
+        new_current_status = user.statuses.active.last
+        user.set_gmail_status(new_current_status.message) if user.uses_gmail? && new_current_status
       end
     end
   end
