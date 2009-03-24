@@ -16,20 +16,24 @@ class Status < ActiveRecord::Base
   def self.import
     twitter = Twitter::Base.new(TWITTER_USER, TWITTER_PASSWORD)
     special_messages = []
-    max_twitter_id = Status.find_by_sql('select max(twitter_id) from statuses')
+    max_twitter_id = Status.maximum(:twitter_id).to_i
     begin
-      msgs = twitter.direct_messages(:since_id => max_twitter_id)
+      msgs = (max_twitter_id==0) ? twitter.direct_messages : twitter.direct_messages(:since_id => max_twitter_id)
       could_be_more = (msgs.length == 20)
       msgs.each do |message|
         user = User.find_by_twitter_id(message.sender_id)
-        if done_message?(message.text)
-          special_messages << message
-        else
-          unless Status.find_by_twitter_id(message.id)
-            Status.create(:user => user, :message => message.text, :twitter_created_at => message.created_at, :twitter_id => message.id)
+        unless Status.find_by_twitter_id(message.id)
+          if done_message?(message.text)
+            special_messages << message
+            user = nil
           end
+          Status.create(:user => user, :message => message.text, :twitter_created_at => message.created_at, :twitter_id => message.id)
         end
-        twitter.destroy_direct_message(message.id)
+        begin
+          twitter.destroy_direct_message(message.id)
+        rescue Exception => e
+          puts "Destroying direct message (#{message.id}) failed -- #{e}"
+        end
       end
     end while could_be_more
 
