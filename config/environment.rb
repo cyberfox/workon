@@ -15,6 +15,8 @@ Rails::Initializer.run do |config|
   config.gem 'echoe'
   config.gem 'rubyforge'
   config.gem 'highline'
+  config.gem 'xmpp4r-simple'
+  config.gem 'xmpp4r'
   # Settings in config/environments/* take precedence over those specified here.
   # Application configuration should go into files in config/initializers
   # -- all .rb files in that directory are automatically loaded.
