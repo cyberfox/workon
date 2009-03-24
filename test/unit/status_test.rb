@@ -30,10 +30,13 @@ class StatusTest < ActiveSupport::TestCase
 
   context "Importing more than 20 statuses" do
     should "get all of them" do
-      first_twenty = OpenStruct.new(:sender_id => 1337, :text => 'First twenty', :id => 75)
-      second_ten = OpenStruct.new(:sender_id => 1836, :text => 'Second ten', :id => 99)
-      @twitter_mock.should_receive(:direct_messages).once.and_return([first_twenty] * 20)
-      @twitter_mock.should_receive(:direct_messages).once.and_return([second_ten] * 10)
+      step_id = 199
+      first_twenty = []
+      20.times { first_twenty << OpenStruct.new(:sender_id => 1337, :text => 'First twenty', :id => 75, :id => (step_id += 1)) }
+      second_ten = []
+      10.times { second_ten << OpenStruct.new(:sender_id => 1836, :text => 'Second ten', :id => 99, :id => (step_id += 1)) }
+      @twitter_mock.should_receive(:direct_messages).once.and_return(first_twenty)
+      @twitter_mock.should_receive(:direct_messages).once.and_return(second_ten)
       @twitter_mock.should_receive(:destroy_direct_message).times(30).and_return
 
       assert_difference 'Status.count', 30 do
