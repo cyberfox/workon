@@ -28,7 +28,7 @@ class Status < ActiveRecord::Base
             user = nil
           end
           Status.create(:user => user, :message => message.text, :twitter_created_at => message.created_at, :twitter_id => message.id)
-          user.set_gmail_status(message.text) if user.uses_gmail?
+          user.set_gmail_status(message.text) if user && user.uses_gmail?
         end
         begin
           twitter.destroy_direct_message(message.id)
@@ -43,6 +43,7 @@ class Status < ActiveRecord::Base
     special_messages.sort { |x, y| Time.parse(x.created_at) <=> Time.parse(y.created_at)}
     special_messages.each do |message|
       user = User.find_by_twitter_id(message.sender_id)
+      # We check again here so we can add other kinds of special messages.
       if done_message?(message.text)
         last_status = user.statuses.active.last
         last_status.update_attribute :done_at, message.created_at if last_status
@@ -53,6 +54,7 @@ class Status < ActiveRecord::Base
           else
             user.set_gmail_status('Available')
           end
+        end
       end
     end
   end
