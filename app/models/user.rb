@@ -62,6 +62,15 @@ class User < ActiveRecord::Base
     twitter.d(twitter_id, "http://workon.cyberfox.com/user/#{access_key} to view recent tasks. 'd workon {task}' to add, 'd workon done' to finish. ~2min response time.")
   end
 
+  def uses_gmail?
+    email_present && email.include?('@gmail.com') && !gmail_password.nil?
+  end
+
+  def set_gmail_status(text)
+    jab = Jabber::Simple.new(email, gmail_password)
+    jab.status(nil, text)
+  end
+
   protected
   def password_required?
     return false if password.nil? && password_confirmation.nil?
@@ -70,15 +79,6 @@ class User < ActiveRecord::Base
 
   def email_present?
     !email.nil?
-  end
-
-  def uses_gmail?
-    email_present && email.include?('@gmail.com') && !gmail_password.nil?
-  end
-
-  def set_gmail_status(text)
-    jab = Jabber::Simple.new(email, gmail_password)
-    jab.status(nil, text)
   end
 
   def set_access_key
