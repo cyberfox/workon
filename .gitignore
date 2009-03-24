@@ -7,3 +7,6 @@ db/*.sqlite3
 *.o
 *.bundle
 db/schema.rb
+*.so
+vendor/gems/**/mkmf.log
+vendor/gems/**/Makefile
