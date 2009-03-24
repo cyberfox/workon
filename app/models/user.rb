@@ -73,7 +73,7 @@ class User < ActiveRecord::Base
   end
 
   def uses_gmail?
-    email_present && email.include? '@gmail.com' && !gmail_password.nil?
+    email_present && email.include?('@gmail.com') && !gmail_password.nil?
   end
 
   def set_gmail_status(text)

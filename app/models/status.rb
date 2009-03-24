@@ -47,7 +47,12 @@ class Status < ActiveRecord::Base
         last_status = user.statuses.active.last
         last_status.update_attribute :done_at, message.created_at if last_status
         new_current_status = user.statuses.active.last
-        user.set_gmail_status(new_current_status.message) if user.uses_gmail? && new_current_status
+        if user.uses_gmail?
+          if new_current_status
+            user.set_gmail_status(new_current_status.message)
+          else
+            user.set_gmail_status('Available')
+          end
       end
     end
   end
