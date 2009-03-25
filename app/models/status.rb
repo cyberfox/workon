@@ -16,7 +16,7 @@ class Status < ActiveRecord::Base
   def self.import
     twitter = Twitter::Base.new(TWITTER_USER, TWITTER_PASSWORD)
     special_messages = []
-    max_twitter_id = Status.maximum(:twitter_id).to_i
+    max_twitter_id = Status.maximum(:twitter_id).to_i + 1
     begin
       msgs = (max_twitter_id==0) ? twitter.direct_messages : twitter.direct_messages(:since_id => max_twitter_id)
       could_be_more = (msgs.length == 20)
